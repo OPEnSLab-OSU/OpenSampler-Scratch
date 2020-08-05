@@ -58,11 +58,9 @@ public:
 	}
 
 	void update() override {
-		if (!isBusy()) {
-			run_button.listen(sm);
-			empty_button.listen(esm);
-			clean_button.listen(csm);
-		}
+		run_button.listen(sm, isBusy());
+		empty_button.listen(esm, isBusy());
+		clean_button.listen(csm, isBusy());
 		KPController::update();
 	}
 	// Serial Monitor

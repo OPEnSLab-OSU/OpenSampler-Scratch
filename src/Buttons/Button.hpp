@@ -13,23 +13,31 @@ public:
 		pinMode(pin, INPUT);
 	}
 
-	void listen(StateMachine & sm) {
-		int reading = digitalRead(pin);
+	void listen(StateMachine & sm, bool isbusy) {
+		if (!isbusy || sm.isBusy()) {
+			int reading = digitalRead(pin);
 
-		if (reading != lastButtonState) {
-			lastDebounceTime = millis();
-		}
-		if ((millis() - lastDebounceTime) > debounceDelay) {
-			if (reading != buttonState) {
-				buttonState = reading;
-				if (buttonState == LOW) {
-					act(sm);
+			if (reading != lastButtonState) {
+				lastDebounceTime = millis();
+			}
+			if ((millis() - lastDebounceTime) > debounceDelay) {
+				if (reading != buttonState) {
+					buttonState = reading;
+					if (buttonState == LOW) {
+						act(sm);
+					}
 				}
 			}
+			lastButtonState = reading;
 		}
-		lastButtonState = reading;
 	}
 	void act(StateMachine & sm) {
-		sm.begin();
+		if (!sm.isBusy()) {
+			sm.begin();
+		} else {
+			Application & app = *static_cast<Application *>(sm.controller);
+			app.current_valve = 24;
+			sm.stop();
+		}
 	};
 };
