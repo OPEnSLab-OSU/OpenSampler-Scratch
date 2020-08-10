@@ -43,7 +43,7 @@ void SampleStateFlush::enter(KPStateMachine & sm) {
 void SampleStateSample::enter(KPStateMachine & sm) {
 	Application & app = *static_cast<Application *>(sm.controller);
 	app.shift.setAllRegistersLow();
-	app.shift.setPin(app.current_valve + Shift::FIRST_SAMPLE_VALVE, HIGH);
+	app.shift.setPin(Shift::FIRST_SAMPLE_VALVE, HIGH);
 	app.shift.write();
 	app.pump.on();
 	setTimeCondition(time, [&]() { sm.transitionTo(SampleStateNames::STOP); });

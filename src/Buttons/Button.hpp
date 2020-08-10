@@ -1,5 +1,8 @@
-#include <KPFoundation.hpp>
+#pragma once
+
+//#include <KPFoundation.hpp>
 #include <Components/StateMachine.hpp>
+#include <Application/Application.hpp>
 class Button {
 public:
 	const unsigned short pin;
@@ -35,9 +38,8 @@ public:
 		if (!sm.isBusy()) {
 			sm.begin();
 		} else {
-			Application & app = *static_cast<Application *>(sm.controller);
-			app.current_valve = 24;
-			sm.stop();
+			// Application & app = *static_cast<Application *>(sm.controller);
+			// sm.stop();
 		}
 	};
 };

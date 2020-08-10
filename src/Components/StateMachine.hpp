@@ -3,6 +3,7 @@
 #include <KPFoundation.hpp>
 #include <KPStateMachine.hpp>
 #include <KPState.hpp>
+#include <Application/Application.hpp>
 
 class StateMachine : public KPStateMachine {
 public:
